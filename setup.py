@@ -1,10 +1,10 @@
 import setuptools
 
 setuptools.setup(
-    name="numbergroup",
-    version="0.1",
+    name="simplebins",
+    version="1.0",
     author="Marius Kaffai",
     author_email="marius.kaffai.sowi@gmail.com",
-    description="A small Python package to group numbers.",
-    packages=["numbergroup"]
+    description="A lightweight Python utility for binning numeric data into equal-width intervals.",
+    packages=["simplebins"]
 )
