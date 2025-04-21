@@ -3,9 +3,8 @@
 **simplebins** is a lightweight Python utility that makes it easy to bin numeric values into equal-width intervals.  
 It supports individual numbers, lists, `pandas.Series`, and `pandas.DataFrame`s.
 
----
 
-## 🔧 Features
+## Features
 
 - Works with numbers, lists, `pandas.Series`, and `pandas.DataFrame`s  
 - Returns either the bin index, floor, ceiling, midpoint, or a human-readable label  
@@ -13,24 +12,21 @@ It supports individual numbers, lists, `pandas.Series`, and `pandas.DataFrame`s.
 - Handles missing values gracefully  
 - Zero dependencies outside of `pandas` and `numpy`
 
----
 
-## ❓ Why not `pandas.cut()`?
+## Why not `pandas.cut()`?
 
 `pandas.cut()` is powerful but sometimes overkill.  
 **simplebins** simplifies the common use case: fixed-width bins with predictable, numeric output – perfect for quick transformations.
 
----
 
-## 🚀 Installation
+## Installation
 
 ```bash
 pip install simplebins
 ```
 
----
 
-## 📦 Usage
+## Usage
 
 ```python
 from simplebins import cut
@@ -65,14 +61,3 @@ cut(pd.Series([3, 7, np.nan]), binwidth=5)
 df = pd.DataFrame({"age": [21, 34, 65], "income": [2000, 3120, 4190]})
 cut(df, binwidth=10)
 ```
-
----
-
-## 🛠 cut()-parameters
-
-| Parameter    | Type                  | Default   | Description |
-|--------------|-----------------------|-----------|-------------|
-| `x`          | number, list, Series, DataFrame | –         | Input data to bin |
-| `binwidth`   | `float`               | –         | Width of each bin (must be > 0) |
-| `origin`     | `float`               | `0`       | Starting point for bins |
-| `output`     | `str`                 | `"floor"` | One of: `"index"`, `"floor"`, `"ceiling"`, `"center"`, `"label"` |
