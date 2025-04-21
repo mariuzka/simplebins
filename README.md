@@ -51,11 +51,12 @@ cut([3, 7, 12], binwidth=5)
 ### Bin a pandas Series
 ```python
 import pandas as pd
-cut(pd.Series([3, 7, 12]), binwidth=5, output="label")
+import numpy as np
+cut(pd.Series([3, 7, np.nan]), binwidth=5)
 # Output: 
-# 0     0 <= x < 5
-# 1     5 <= x < 10
-# 2    10 <= x < 15
+# 0     0
+# 1     5
+# 2    nan
 # dtype: object
 ```
 
@@ -67,7 +68,7 @@ cut(df, binwidth=10)
 
 ---
 
-## 🛠 Parameters
+## 🛠 cut()-parameters
 
 | Parameter    | Type                  | Default   | Description |
 |--------------|-----------------------|-----------|-------------|
