@@ -1,7 +1,7 @@
 # simplebins
 
 **simplebins** is a lightweight Python utility that makes it easy to bin numeric values into equal-width intervals.  
-It supports individual numbers, lists, `pandas.Series`, and `pandas.DataFrame`s – making it a versatile tool for preprocessing, feature engineering, and data summarization.
+It supports individual numbers, lists, `pandas.Series`, and `pandas.DataFrame`s.
 
 ---
 
@@ -12,6 +12,13 @@ It supports individual numbers, lists, `pandas.Series`, and `pandas.DataFrame`s 
 - Clean and intuitive API  
 - Handles missing values gracefully  
 - Zero dependencies outside of `pandas` and `numpy`
+
+---
+
+## ❓ Why not `pandas.cut()`?
+
+`pandas.cut()` is powerful but sometimes overkill.  
+**simplebins** simplifies the common use case: fixed-width bins with predictable, numeric output – perfect for quick transformations.
 
 ---
 
@@ -68,10 +75,3 @@ cut(df, binwidth=10)
 | `binwidth`   | `float`               | –         | Width of each bin (must be > 0) |
 | `origin`     | `float`               | `0`       | Starting point for bins |
 | `output`     | `str`                 | `"floor"` | One of: `"index"`, `"floor"`, `"ceiling"`, `"center"`, `"label"` |
-
----
-
-## ❓ Why not `pandas.cut()`?
-
-`pandas.cut()` is powerful but sometimes overkill.  
-**simplebins** simplifies the common use case: fixed-width bins with predictable, numeric output – perfect for quick transformations.
