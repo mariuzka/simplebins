@@ -50,17 +50,17 @@ def _cut(
 
 
 def cut(
-    x: float | list | pd.Series | pd.DataFrame | None, 
+    x: float | list | pd.Series | None, 
     binwidth: float,
     origin: float = 0,
     output: str = "floor",
-    ) -> float | list | pd.Series | pd.DataFrame | None:
+    ) -> float | list | pd.Series | None:
     """
     Assigns numeric values to equal-width bins.
 
     Parameters
     ----------
-    x : float, int, list of numbers, pandas.Series or pandas.DataFrame
+    x : float, int, list of numbers or pandas.Series
         The input data to be binned. Missing values (e.g. NaN) are preserved.
     binwidth : float
         The width of each bin. Must be a positive number.
@@ -76,22 +76,22 @@ def cut(
 
     Returns
     -------
-    Union[float, str, list, pandas.Series, pandas.DataFrame]
+    Union[float, str, list, pandas.Series]
         Transformed input with values replaced by their corresponding bin representation.
 
     """
     
     if not isinstance(binwidth, (int, float)):
-        raise ValueError("The argument binwidth must be int or float.")
+        raise ValueError("The argument `binwidth` must be int or float.")
     
     if binwidth <= 0:
-        raise ValueError("Binwidth must be > 0.")
+        raise ValueError("The argument `binwidth` must be > 0.")
     
     if not isinstance(origin, (int, float)):
-        raise ValueError("The argument origin must be int or float.")
+        raise ValueError("The argument `origin` must be int or float.")
     
     if output not in VALID_OUTPUTS:
-        raise ValueError(f"The argument output must be one of {VALID_OUTPUTS}")
+        raise ValueError(f"The argument `output` must be one of {VALID_OUTPUTS}")
     
     # number
     if isinstance(x, numbers.Number):
@@ -116,5 +116,5 @@ def cut(
     
     else:
         raise ValueError(
-            f"The argument x has to be one of: number, list, pandas.Series, pandas.DataFrame. {x} is not."
+            f"The argument `x` has to be one of: number, list, pandas.Series. {x} is not."
         )
