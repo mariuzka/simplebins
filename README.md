@@ -1,12 +1,12 @@
 # simplebins
 
 **simplebins** is a lightweight Python utility that makes it easy to bin numeric values into equal-width intervals.  
-It supports individual numbers, lists, `pandas.Series`, and `pandas.DataFrame`s.
+It supports individual numbers, lists and `pandas.Series`.
 
 
 ## Features
 
-- Works with numbers, lists, `pandas.Series`, and `pandas.DataFrame`s  
+- Works with numbers, lists and `pandas.Series` 
 - Returns either the bin index, floor, ceiling, midpoint, or a human-readable label  
 - Clean and intuitive API  
 - Handles missing values gracefully  
@@ -54,10 +54,4 @@ cut(pd.Series([3, 7, np.nan]), binwidth=5)
 # 1     5
 # 2    nan
 # dtype: object
-```
-
-### Bin a DataFrame column-wise
-```python
-df = pd.DataFrame({"age": [21, 34, 65], "income": [2000, 3120, 4190]})
-cut(df, binwidth=10)
 ```

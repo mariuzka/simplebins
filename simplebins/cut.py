@@ -110,15 +110,6 @@ def cut(
             output=output, 
             ))
     
-    # pandas dataframe
-    elif isinstance(x, pd.DataFrame):
-        return x.map(lambda number: _cut(
-            x=number, 
-            binwidth=binwidth,
-            origin=origin,
-            output=output, 
-        ))
-    
     # NAs
     elif pd.isna(x):
         return x

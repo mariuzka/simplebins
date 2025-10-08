@@ -24,12 +24,3 @@ def test_series_with_NA():
     
     for i, val in enumerate(s.to_list()):
         val is e.to_list()[i]
-
-
-def test_dataframe():
-    df = pd.DataFrame({"age": [20, 33, 67], "income": [2000, 3002, 4018]})
-    df = simplebins.cut(x=df, binwidth=10, output="floor", origin=0)
-
-    assert df["age"].to_list() == [20, 30, 60]
-    assert df["income"].to_list() == [2000, 3000, 4010]
-    
