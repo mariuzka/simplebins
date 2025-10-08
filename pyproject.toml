@@ -12,7 +12,7 @@ keywords = ["binning", "discretization", "data-preprocessing", "pandas", "utilit
 [tool.poetry.dependencies]
 python = "^3.10"
 pandas = "^2.2.3"
-numpy = "^1.21"
+numpy = "^2.0.0"
 
 [poetry.group.dev.dependencies]
 pytest = "^7.0"
