@@ -8,7 +8,7 @@ jobs:
     uses: ./.github/workflows/tox.yml
   release:
     name: Release
-    needs: [test, build_docs]
+    needs: [test]
     runs-on: ubuntu-latest
     permissions:
       id-token: write
