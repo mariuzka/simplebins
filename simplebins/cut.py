@@ -84,6 +84,8 @@ def cut(
         - 'ceiling' : Upper edge of the bin
         - 'center'  : Center point of the bin
         - 'label'   : Human-readable label, e.g. "10 <= x < 15"
+    ignore : list[float] | None, default=None
+        A list of numbers that should be returned as they are.
 
     Returns
     -------
