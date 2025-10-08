@@ -15,12 +15,22 @@ def _cut(
     x: float | None, 
     binwidth: float,
     output: str,
-    origin: float, 
+    origin: float,
+    ignore: list[float] | None = None,
     ) -> float:
     
     # ignore NAs
     if pd.isna(x):
         return x
+    
+    # ignore numbers that are in the ignore list
+    if ignore is not None:
+        if not isinstance(ignore, list):
+            raise ValueError("Parameter `ignore` must be a list of floats or None.")
+        else:
+            if x in ignore:
+                return x
+                
     
     # transform numbers
     if isinstance(x, numbers.Number):
@@ -54,6 +64,7 @@ def cut(
     binwidth: float,
     origin: float = 0,
     output: str = "floor",
+    ignore: list[float] | None = None,
     ) -> float | list | pd.Series | None:
     """
     Assigns numeric values to equal-width bins.
@@ -95,11 +106,11 @@ def cut(
     
     # number
     if isinstance(x, numbers.Number):
-        return _cut(x=x, origin=origin, binwidth=binwidth, output=output)
+        return _cut(x=x, origin=origin, binwidth=binwidth, output=output, ignore=ignore)
     
     # list
     elif isinstance(x, list):
-        return [_cut(x=number, binwidth=binwidth, origin=origin, output=output) for number in x]
+        return [_cut(x=number, binwidth=binwidth, origin=origin, output=output, ignore=ignore) for number in x]
     
     # pandas series
     elif isinstance(x, pd.Series):
@@ -107,7 +118,8 @@ def cut(
             x=number, 
             binwidth=binwidth,
             origin=origin,
-            output=output, 
+            output=output,
+            ignore=ignore,
             ))
     
     # NAs
