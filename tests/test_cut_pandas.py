@@ -15,7 +15,11 @@ def test_series_with_None():
     s = simplebins.cut(x=s, binwidth=10, output="floor", origin=0)
     
     for i, val in enumerate(s.to_list()):
-        val is e.to_list()[i]
+        if pd.isna(val):
+            assert pd.isna(e.to_list()[i])
+        else:
+            assert val == e.to_list()[i]
+            
 
 def test_series_with_NA():
     s = pd.Series([3, 13, np.nan])
@@ -23,4 +27,18 @@ def test_series_with_NA():
     s = simplebins.cut(x=s, binwidth=10, output="floor", origin=0)
     
     for i, val in enumerate(s.to_list()):
-        val is e.to_list()[i]
+        if pd.isna(val):
+            assert pd.isna(e.to_list()[i])
+        else:
+            assert val == e.to_list()[i]
+
+def test_ignore():
+    s = pd.Series([1, 2, 3, None])
+    e = pd.Series([0, 2, 0, None])
+    s = simplebins.cut(x=s, binwidth=10, output="floor", origin=0, ignore=[2])
+
+    for i, val in enumerate(s.to_list()):
+        if pd.isna(val):
+            assert pd.isna(e.to_list()[i])
+        else:
+            assert val == e.to_list()[i]

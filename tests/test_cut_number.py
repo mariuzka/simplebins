@@ -33,4 +33,10 @@ def test_origin():
     assert simplebins.cut(x=10, binwidth=5, output="index", origin=0) == 2
     assert simplebins.cut(x=10, binwidth=5, output="index", origin=1) == 1
     assert simplebins.cut(x=10, binwidth=5, output="index", origin=5) == 1
-    
+
+def test_ignore():
+    assert simplebins.cut(x=3, binwidth=5, ignore=None) == 0
+    assert simplebins.cut(x=3, binwidth=5, ignore=[]) == 0
+    assert simplebins.cut(x=3, binwidth=5, ignore=[4]) == 0
+    assert simplebins.cut(x=3, binwidth=5, ignore=[3]) == 3
+    assert simplebins.cut(x=None, binwidth=5, ignore=[None]) is None

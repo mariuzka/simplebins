@@ -14,3 +14,8 @@ def test_empty_list():
     l = []
     e = []
     assert simplebins.cut(x=l, binwidth=5, output="floor", origin=0) == e
+
+def test_ignore():
+    l = [1, 2, 3, None]
+    e = [0, 2, 0, None]
+    assert simplebins.cut(x=l, binwidth=5, output="floor", origin=0, ignore=[2]) == e
