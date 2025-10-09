@@ -12,6 +12,11 @@ VALID_OUTPUTS = [
         "label",
     ]
 
+def _count_decimals(number: float) -> float:
+    q = Decimal(str(number))
+    exp = -q.as_tuple().exponent
+    return max(0, exp)
+
 def _cut(
     x: float | None, 
     binwidth: float,
@@ -20,12 +25,6 @@ def _cut(
     ignore: list[float] | None = None,
     ) -> float:
 
-    def digits_for_binwidth(binwidth):
-        q = Decimal(str(binwidth))
-        exp = -q.as_tuple().exponent
-        return max(0, exp)
-
-    
     # ignore NAs
     if pd.isna(x):
         return x
@@ -42,7 +41,7 @@ def _cut(
     # transform numbers
     if isinstance(x, numbers.Number):
         bin_index = math.floor((x - origin) / binwidth)
-        nd = digits_for_binwidth(binwidth)
+        n_decimals = _count_decimals(binwidth)
         
         if output == "index":
             return bin_index
@@ -50,18 +49,18 @@ def _cut(
         floor = bin_index * binwidth + origin
 
         if output == "floor":
-            return round(floor, nd)
+            return round(floor, n_decimals)
 
         ceiling = floor + binwidth
 
         if output == "ceiling":
-            return round(ceiling, nd)
+            return round(ceiling, n_decimals)
         
         if output == "center":
-            return round((round(floor, nd) + round(ceiling, nd)) / 2, nd+1)
+            return round((round(floor, n_decimals) + round(ceiling, n_decimals)) / 2, n_decimals+1)
         
         if output == "label":
-            return f"{round(floor, nd)} <= x < {round(ceiling, nd)}"
+            return f"{round(floor, n_decimals)} <= x < {round(ceiling, n_decimals)}"
         
     # Raise error if x is not a number or a NA
     raise ValueError(f"Wrong input for x. It must be a number or a missing value. {x} is not.")
