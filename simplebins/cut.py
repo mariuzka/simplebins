@@ -2,6 +2,7 @@ import math
 import numbers
 import pandas as pd
 import numpy as np
+from decimal import Decimal
 
 VALID_OUTPUTS = [
         "index",
@@ -18,6 +19,12 @@ def _cut(
     origin: float,
     ignore: list[float] | None = None,
     ) -> float:
+
+    def digits_for_binwidth(binwidth):
+        q = Decimal(str(binwidth))
+        exp = -q.as_tuple().exponent
+        return max(0, exp)
+
     
     # ignore NAs
     if pd.isna(x):
@@ -35,6 +42,7 @@ def _cut(
     # transform numbers
     if isinstance(x, numbers.Number):
         bin_index = math.floor((x - origin) / binwidth)
+        nd = digits_for_binwidth(binwidth)
         
         if output == "index":
             return bin_index
@@ -42,19 +50,19 @@ def _cut(
         floor = bin_index * binwidth + origin
 
         if output == "floor":
-            return floor
+            return round(floor, nd)
 
         ceiling = floor + binwidth
 
         if output == "ceiling":
-            return ceiling
+            return round(ceiling, nd)
         
         if output == "center":
-            return (floor + ceiling) / 2
+            return round((round(floor, nd) + round(ceiling, nd)) / 2, nd+1)
         
         if output == "label":
-            return f"{floor} <= x < {ceiling}"
-
+            return f"{round(floor, nd)} <= x < {round(ceiling, nd)}"
+        
     # Raise error if x is not a number or a NA
     raise ValueError(f"Wrong input for x. It must be a number or a missing value. {x} is not.")
 
