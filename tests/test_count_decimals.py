@@ -1,6 +1,7 @@
 import simplebins
 
 def test_count_decimals():
+    assert simplebins._count_decimals(number=0) == 0
     assert simplebins._count_decimals(number=1) == 0
     assert simplebins._count_decimals(number=1.0) == 0
     assert simplebins._count_decimals(number=3.2) == 1
