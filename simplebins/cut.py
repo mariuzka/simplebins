@@ -41,7 +41,7 @@ def _cut(
     # transform numbers
     if isinstance(x, numbers.Number):
         bin_index = math.floor((x - origin) / binwidth)
-        n_decimals = _count_decimals(binwidth)
+        n_decimals = _count_decimals(number=binwidth)
         
         if output == "index":
             return bin_index
