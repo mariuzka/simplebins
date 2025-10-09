@@ -48,7 +48,7 @@ def _cut(
             return round(ceiling, nd)
         
         if output == "center":
-            return round((floor + ceiling) / 2, nd)
+            return round((round(floor, nd) + round(ceiling, nd)) / 2, nd+1)
         
         if output == "label":
             return f"{round(floor, nd)} <= x < {round(ceiling, nd)}"
