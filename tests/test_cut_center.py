@@ -1,5 +1,5 @@
 import simplebins
-from decimal import Decimal
+
 def test_list():
     l = [
         0.2893650498416237,
