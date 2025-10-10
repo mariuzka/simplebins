@@ -12,8 +12,8 @@ VALID_OUTPUTS = [
         "label",
     ]
 
-def _count_decimals(number: float) -> float:
-    q = Decimal(str(number))
+def _count_decimals(number: float) -> int:
+    q = Decimal(str(number)).normalize()
     exp = -q.as_tuple().exponent
     return max(0, exp)
 
