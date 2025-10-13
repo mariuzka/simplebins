@@ -2,6 +2,7 @@ import math
 import numbers
 import pandas as pd
 import numpy as np
+from decimal import Decimal
 
 VALID_OUTPUTS = [
         "index",
@@ -11,6 +12,11 @@ VALID_OUTPUTS = [
         "label",
     ]
 
+def _count_decimals(number: float) -> int:
+    q = Decimal(str(number)).normalize()
+    exp = -q.as_tuple().exponent
+    return max(0, exp)
+
 def _cut(
     x: float | None, 
     binwidth: float,
@@ -18,7 +24,7 @@ def _cut(
     origin: float,
     ignore: list[float] | None = None,
     ) -> float:
-    
+
     # ignore NAs
     if pd.isna(x):
         return x
@@ -35,6 +41,7 @@ def _cut(
     # transform numbers
     if isinstance(x, numbers.Number):
         bin_index = math.floor((x - origin) / binwidth)
+        n_decimals = _count_decimals(number=binwidth)
         
         if output == "index":
             return bin_index
@@ -42,19 +49,19 @@ def _cut(
         floor = bin_index * binwidth + origin
 
         if output == "floor":
-            return floor
+            return round(floor, n_decimals)
 
         ceiling = floor + binwidth
 
         if output == "ceiling":
-            return ceiling
+            return round(ceiling, n_decimals)
         
         if output == "center":
-            return (floor + ceiling) / 2
+            return round((round(floor, n_decimals) + round(ceiling, n_decimals)) / 2, n_decimals+1)
         
         if output == "label":
-            return f"{floor} <= x < {ceiling}"
-
+            return f"{round(floor, n_decimals)} <= x < {round(ceiling, n_decimals)}"
+        
     # Raise error if x is not a number or a NA
     raise ValueError(f"Wrong input for x. It must be a number or a missing value. {x} is not.")
 
@@ -84,6 +91,8 @@ def cut(
         - 'ceiling' : Upper edge of the bin
         - 'center'  : Center point of the bin
         - 'label'   : Human-readable label, e.g. "10 <= x < 15"
+    ignore : list[float] | None, default=None
+        A list of numbers that should be returned as they are.
 
     Returns
     -------
